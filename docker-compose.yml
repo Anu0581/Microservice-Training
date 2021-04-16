@@ -1,0 +1,44 @@
+version: '3.3'
+services:
+  product-ms:
+    image: anurag/productms
+ 
+    ports:
+      - "8081:8081"
+    networks:
+      - bootcamp-network
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://eureka-server:8761/eureka
+  discount-ms:
+    image: anurag/discountms
+  
+    ports:
+      - "8082:8082"
+    networks:
+      - bootcamp-network
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://eureka-server:8761/eureka
+  config-server:
+    image: anurag/configserver
+  
+    ports:
+      - "8888:8888"
+    networks:
+      - bootcamp-network
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://eureka-server:8761/eureka
+  eureka-server:
+    image: anurag/eureka
+  
+    ports:
+      - "8761:8761"
+    networks:
+      - bootcamp-network
+networks:
+  bootcamp-network:
